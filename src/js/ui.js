@@ -9,6 +9,10 @@ const UI = (() => {
   const btnAddTask = document.getElementById('add-task');
   const projectTasks = document.getElementById('project-tasks');
   const currentTask = document.getElementById('current-task');
+  const detailsTask = document.getElementById('detail-task');
+  const inputDueDate = document.getElementById('due-date');
+  const selectPriority = document.getElementById('select-priority');
+  const inputNote = document.getElementById('note');
 
   let chosenProject;
 
@@ -94,14 +98,20 @@ const UI = (() => {
   const selectedTask = (e) => {
     if (e.target.classList.contains('name-task')) {
       currentTask.innerText = e.target.innerText;
+      const chosenTask = chosenProject.tasks.filter((task) => task.title === e.target.innerText);
+      const actualTask = Task(chosenTask[0]);
+      inputDueDate.value = actualTask.dueDate;
+      selectPriority.value = actualTask.priority;
+      inputNote.value = actualTask.note;
+      detailsTask.classList.remove('d-none');
     } else if (e.target.classList.contains('delete')) {
-      let chosenTask = chosenProject.tasks.filter(task => task.title !== e.target.dataset.task )
-      console.log(chosenTask);
-      chosenProject.tasks = chosenTask;
+      const taskToDelete = e.target.dataset.task;
+      const updatedTasks = chosenProject.tasks.filter((task) => task.title !== taskToDelete);
+      chosenProject.tasks = updatedTasks;
       storage.update(chosenProject.title, chosenProject);
       renderTasks();
     }
-  }
+  };
 
   const loadListeners = () => {
     renderProjects();
