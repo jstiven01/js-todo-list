@@ -8,7 +8,7 @@ const UI = (() => {
   const currentProject = document.getElementById('current-project');
   const btnAddTask = document.getElementById('add-task');
   const projectTasks = document.getElementById('project-tasks');
-
+  const currentTask = document.getElementById('current-task');
 
   let chosenProject;
 
@@ -37,7 +37,7 @@ const UI = (() => {
       const span = document.createElement('span');
       const checkIsDone = document.createElement('input');
 
-      button.setAttribute('class', 'btn-small btn-primary');
+      button.setAttribute('class', 'btn-small btn-primary delete');
       button.setAttribute('data-task', `${chosenProject.tasks[i].title}`);
       button.innerHTML = 'Delete';
       divCheck.setAttribute('class', 'form-check form-check-inline');
@@ -91,11 +91,24 @@ const UI = (() => {
     renderTasks();
   };
 
+  const selectedTask = (e) => {
+    if (e.target.classList.contains('name-task')) {
+      currentTask.innerText = e.target.innerText;
+    } else if (e.target.classList.contains('delete')) {
+      let chosenTask = chosenProject.tasks.filter(task => task.title !== e.target.dataset.task )
+      console.log(chosenTask);
+      chosenProject.tasks = chosenTask;
+      storage.update(chosenProject.title, chosenProject);
+      renderTasks();
+    }
+  }
+
   const loadListeners = () => {
     renderProjects();
     btnCreateProject.addEventListener('click', createProject);
     projectsUser.addEventListener('click', selectedProject);
     btnAddTask.addEventListener('click', AddTaskToProject);
+    projectTasks.addEventListener('click', selectedTask);
   };
 
   return {
