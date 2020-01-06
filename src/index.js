@@ -12,4 +12,6 @@ let project1 = {
 storage.create(project1.title, project1);
 project1.tasks[0].name = "task updated";
 storage.update(project1.title, project1);
-//console.log(storage.create(project1.title, project1));
+// console.log(storage.remove(project1.title));
+// console.log(storage.read(project1.title));
+// console.log(storage.create(project1.title, project1));

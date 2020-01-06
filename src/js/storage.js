@@ -19,8 +19,25 @@ const storage = (() => {
 
     }
 
+    const read = (key) => {
+        if (Object.keys(localStorage).includes(key)) {
+            return JSON.parse(localStorage.getItem(key));
+        } else {
+            return false;
+        }
+    }
+
+    const remove = (key) => {
+        if (Object.keys(localStorage).includes(key)) {
+            localStorage.removeItem(key);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     return {
-        create, update
+        create, update, read, remove
     }
 
 }
