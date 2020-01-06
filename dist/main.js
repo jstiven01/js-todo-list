@@ -3881,7 +3881,19 @@ eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn th
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _scss_style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./scss/style.scss */ \"./src/scss/style.scss\");\n/* harmony import */ var _scss_style_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_scss_style_scss__WEBPACK_IMPORTED_MODULE_0__);\n\nconsole.log('Basic Setup');\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _scss_style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./scss/style.scss */ \"./src/scss/style.scss\");\n/* harmony import */ var _scss_style_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_scss_style_scss__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _js_storage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/storage */ \"./src/js/storage.js\");\n\n\nconsole.log('Basic Setup');\nvar project1 = {\n  title: 'Amanda Project1',\n  tasks: [{\n    name: \"task 1\"\n  }, {\n    name: \"task 2\"\n  }]\n};\n_js_storage__WEBPACK_IMPORTED_MODULE_1__[\"default\"].create(project1.title, project1);\nproject1.tasks[0].name = \"task updated\";\n_js_storage__WEBPACK_IMPORTED_MODULE_1__[\"default\"].update(project1.title, project1); //console.log(storage.create(project1.title, project1));\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/js/storage.js":
+/*!***************************!*\
+  !*** ./src/js/storage.js ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\nvar storage = function () {\n  var create = function create(key, data) {\n    if (Object.keys(localStorage).includes(key)) {\n      return false;\n    } else {\n      localStorage.setItem(key, JSON.stringify(data));\n      return true;\n    }\n  };\n\n  var update = function update(key, data) {\n    if (Object.keys(localStorage).includes(key)) {\n      localStorage.setItem(key, JSON.stringify(data));\n      return true;\n    } else {\n      return false;\n    }\n  };\n\n  return {\n    create: create,\n    update: update\n  };\n}();\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (storage);\n\n//# sourceURL=webpack:///./src/js/storage.js?");
 
 /***/ }),
 
