@@ -31,6 +31,7 @@ const UI = (() => {
 
 
   const loadListeners = () => {
+    renderProjects();
     btnCreateProject.addEventListener('click', createProject);
   };
 
