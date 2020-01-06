@@ -7,10 +7,49 @@
     <title>TODO List</title>
 </head>
 <body>
-    <div class="container">
+    <div class="container-fluid m-0">
+        <div class="row  text-white" id="navbar">
+            <div class="col-3 text-center"><h3>Projects</h3></div>
+            <div class="col-6 text-center"><h3>Tasks</h3></div>
+            <div class="col-3 text-center"><h3>Task's Details</h3></div>
+        </div>
         <div class="row">
-            <div class="col-7">
-                <h1>TEST BOOTSTRAP</h1>
+            <div class="col-3" id="projects-names">
+              <div class="d-flex my-2">
+                <button type="submit" class="btn btn-primary" id="create-project">+</button>
+                <input type="text" name="project-name" id="project-name" class="form-control" placeholder="Add a Project Name .." required>
+              </div>
+              <div id="projects-user">
+              </div>
+            </div>
+            <div class="col-6" id="tasks-names">
+              <div class="current-project-task" id="current-project">
+              Current Project
+              </div>
+              <div class="d-flex my-2">
+                <button type="submit" class="btn btn-primary" id="add-task">+</button>
+                <input type="text" name="project-name" id="name-task" class="form-control" placeholder="Add a Task Name ..">
+              </div>
+              <div id="project-tasks">
+              </div>
+            </div>
+            <div class="col-3" id="tasks-details">
+              <div class="current-project-task" id="current-task">
+              Current Task
+              </div>
+              <div class="d-none" id='detail-task'>
+               <div class="form">
+                <div class="form-group">
+                  <label for="due-date">Due Date</label>
+                  <input type="date"  class="form-control" name="due-date" id="due-date" aria-describedby="helpId" required>
+                </div>
+                <div class="form-group">
+                  <label for="note">Note</label>
+                  <textarea class="form-control" name="note" id="note" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" id="edit-task">Edit Task</button>
+               </div>
+              </div>
             </div>
         </div>
     </div>
