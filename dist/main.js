@@ -3881,7 +3881,19 @@ eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn th
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _scss_style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./scss/style.scss */ \"./src/scss/style.scss\");\n/* harmony import */ var _scss_style_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_scss_style_scss__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _js_storage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/storage */ \"./src/js/storage.js\");\n/* harmony import */ var _js_task__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./js/task */ \"./src/js/task.js\");\n\n\n\nconsole.log('Basic Setup');\nvar project1 = {\n  title: 'Amanda Project1',\n  tasks: [{\n    name: \"task 1\"\n  }, {\n    name: \"task 2\"\n  }]\n};\n_js_storage__WEBPACK_IMPORTED_MODULE_1__[\"default\"].create(project1.title, project1);\nproject1.tasks[0].name = \"task updated\";\n_js_storage__WEBPACK_IMPORTED_MODULE_1__[\"default\"].update(project1.title, project1); // console.log(storage.remove(project1.title));\n\nconsole.log(_js_storage__WEBPACK_IMPORTED_MODULE_1__[\"default\"].read(project1.title)); // console.log(storage.create(project1.title, project1));\n\nvar task1 = Object(_js_task__WEBPACK_IMPORTED_MODULE_2__[\"default\"])({\n  title: 'task1',\n  note: 'whatever',\n  dueDate: '2020-01-06',\n  priority: 'Normal'\n});\nconsole.log(task1.title, task1.isDone, task1.note);\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _scss_style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./scss/style.scss */ \"./src/scss/style.scss\");\n/* harmony import */ var _scss_style_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_scss_style_scss__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _js_storage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/storage */ \"./src/js/storage.js\");\n/* harmony import */ var _js_task__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./js/task */ \"./src/js/task.js\");\n/* harmony import */ var _js_project__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./js/project */ \"./src/js/project.js\");\n\n\n\n\nconsole.log('Basic Setup');\nvar project1 = {\n  title: 'Amanda Project1',\n  tasks: [{\n    name: \"task 1\"\n  }, {\n    name: \"task 2\"\n  }]\n};\n_js_storage__WEBPACK_IMPORTED_MODULE_1__[\"default\"].create(project1.title, project1);\nproject1.tasks[0].name = \"task updated\";\n_js_storage__WEBPACK_IMPORTED_MODULE_1__[\"default\"].update(project1.title, project1); // console.log(storage.remove(project1.title));\n\nconsole.log(_js_storage__WEBPACK_IMPORTED_MODULE_1__[\"default\"].read(project1.title)); // console.log(storage.create(project1.title, project1));\n\nvar task1 = Object(_js_task__WEBPACK_IMPORTED_MODULE_2__[\"default\"])({\n  title: 'task1',\n  note: 'whatever',\n  dueDate: '2020-01-06',\n  priority: 'Normal'\n}); // console.log(task1.title, task1.isDone, task1.note);\n\nvar project = Object(_js_project__WEBPACK_IMPORTED_MODULE_3__[\"default\"])({\n  title: 'project 1'\n});\nproject.tasks.push(task1);\nconsole.log(project);\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/js/project.js":
+/*!***************************!*\
+  !*** ./src/js/project.js ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\nvar Project = function Project(_ref) {\n  var title = _ref.title,\n      _ref$tasks = _ref.tasks,\n      tasks = _ref$tasks === void 0 ? [] : _ref$tasks;\n  return {\n    title: title,\n    tasks: tasks\n  };\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (Project);\n\n//# sourceURL=webpack:///./src/js/project.js?");
 
 /***/ }),
 
