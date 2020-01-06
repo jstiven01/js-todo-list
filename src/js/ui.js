@@ -5,6 +5,8 @@ import Project from './project';
 const UI = (() => {
   const btnCreateProject = document.getElementById('create-project');
   const projectsUser = document.getElementById('projects-user');
+  const currentProject = document.getElementById('current-project');
+  let chosenProject;
 
   const createProject = () => {
     const nameProject = document.getElementById('project-name').value;
@@ -21,18 +23,29 @@ const UI = (() => {
 
     projects.forEach(project => {
       const content = `
-      <div>
+      <div class="item my-1">
         <span>${project}</span>
       </div>
       `;
       projectsUser.insertAdjacentHTML('beforeend', content);
     })
-  }
+  };
+
+
+
+  const selectedProject = (e) => {
+      console.log(e.target.tagName);
+      if (e.target.tagName.toLowerCase()=== 'span') {
+          currentProject.innerText = e.target.innerText;
+          chosenProject = Project(storage.read(e.target.innerText));
+      }
+  };
 
 
   const loadListeners = () => {
     renderProjects();
     btnCreateProject.addEventListener('click', createProject);
+    projectsUser.addEventListener('click', selectedProject);
   };
 
   return {
