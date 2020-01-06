@@ -30,8 +30,10 @@ const storage = (() => {
     return false;
   };
 
+  const allNamesProjects = () => Object.keys(localStorage);
+
   return {
-    create, update, read, remove,
+    create, update, read, remove, allNamesProjects,
   };
 }
 )();

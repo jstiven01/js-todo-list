@@ -1,9 +1,7 @@
 import './scss/style.scss';
-import storage from './js/storage'
-import Task  from  './js/task'
-import Project from './js/project'
+import UI from './js/ui'
 console.log('Basic Setup');
-
+/*
 let project1 = {
     title: 'Amanda Project1',
     tasks: [
@@ -25,3 +23,6 @@ let project = Project({title: 'project 1'})
 project.tasks.push(task1);
 
 console.log(project);
+*/
+
+UI.loadListeners()

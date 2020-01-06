@@ -1,5 +1,3 @@
-const Project = ({title, tasks = []}) => {
-  return  { title, tasks }
-}
+const Project = ({ title, tasks = [] }) => ({ title, tasks });
 
 export default Project;
