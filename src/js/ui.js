@@ -55,9 +55,9 @@ const UI = (() => {
       if (chosenProject.tasks[i].isDone) {
         span.setAttribute('class', 'name-task flex-grow-1 line-through');
       } else {
-        span.setAttribute('class', 'name-task flex-grow-1')
+        span.setAttribute('class', 'name-task flex-grow-1');
       }
-      
+
       divCheck.appendChild(checkIsDone);
       div.appendChild(divCheck);
       div.appendChild(span);
@@ -94,7 +94,7 @@ const UI = (() => {
 
   const AddTaskToProject = () => {
     const nameTask = document.getElementById('name-task').value;
-    let checkTaskTitle = chosenProject.tasks.filter((task) => task.title === nameTask);
+    const checkTaskTitle = chosenProject.tasks.filter((task) => task.title === nameTask);
     if (nameTask !== '' && checkTaskTitle.length === 0) {
       const newTask = Task({ title: nameTask });
       chosenProject.tasks.push(newTask);
@@ -106,16 +106,13 @@ const UI = (() => {
   const selectedTask = (e) => {
     if (e.target.classList.contains('name-task')) {
       currentTask.innerText = e.target.innerText;
-      const chosenTask = chosenProject.tasks.filter((task) => task.title === e.target.innerText);
-      actualTask = Task(chosenTask[0]);
+      actualTask = Task(chosenProject.findTask(e.target.innerText));
       inputDueDate.value = actualTask.dueDate;
       selectPriority.value = actualTask.priority;
       inputNote.value = actualTask.note;
       detailsTask.classList.remove('d-none');
     } else if (e.target.classList.contains('delete')) {
-      const taskToDelete = e.target.dataset.task;
-      const updatedTasks = chosenProject.tasks.filter((task) => task.title !== taskToDelete);
-      chosenProject.tasks = updatedTasks;
+      chosenProject.tasks = chosenProject.removeTask(e.target.dataset.task);
       storage.update(chosenProject.title, chosenProject);
       renderTasks();
     } else if (e.target.classList.contains('form-check-input')) {
