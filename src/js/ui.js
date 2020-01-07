@@ -70,6 +70,13 @@ const UI = (() => {
     }
   };
 
+  const itemActive = (container) => {
+    const items = container.getElementsByClassName('item');
+    for (let i = 0; i < items.length; i += 1) {
+      items[i].classList.remove('active');
+    }
+  };
+
   const createProject = () => {
     const nameProject = document.getElementById('project-name').value;
     if (nameProject !== '' && !storage.allNamesProjects().includes(nameProject)) {
@@ -84,6 +91,8 @@ const UI = (() => {
     if (e.target.tagName.toLowerCase() === 'span') {
       currentProject.innerText = e.target.innerText;
       chosenProject = Project(storage.read(e.target.innerText));
+      itemActive(projectsUser);
+      e.target.parentNode.classList.add('active');
       renderTasks();
     } else if (e.target.classList.contains('remove')) {
       storage.remove(e.target.dataset.name);
@@ -110,6 +119,8 @@ const UI = (() => {
       inputDueDate.value = actualTask.dueDate;
       selectPriority.value = actualTask.priority;
       inputNote.value = actualTask.note;
+      itemActive(projectTasks);
+      e.target.parentNode.classList.add('active');
       detailsTask.classList.remove('d-none');
     } else if (e.target.classList.contains('delete')) {
       chosenProject.tasks = chosenProject.removeTask(e.target.dataset.task);
