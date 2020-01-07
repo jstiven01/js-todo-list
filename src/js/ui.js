@@ -13,6 +13,7 @@ const UI = (() => {
   const inputDueDate = document.getElementById('due-date');
   const selectPriority = document.getElementById('select-priority');
   const inputNote = document.getElementById('note');
+  const btnEdit = document.getElementById('edit-task');
 
   let chosenProject;
 
@@ -113,12 +114,17 @@ const UI = (() => {
     }
   };
 
+  const editTask = () => {
+    
+  }
+
   const loadListeners = () => {
     renderProjects();
     btnCreateProject.addEventListener('click', createProject);
     projectsUser.addEventListener('click', selectedProject);
     btnAddTask.addEventListener('click', AddTaskToProject);
     projectTasks.addEventListener('click', selectedTask);
+    btnEdit.addEventListener('click', editTask);
   };
 
   return {

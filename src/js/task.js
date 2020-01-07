@@ -3,5 +3,3 @@ const Task = ({
 }) => ({
   title, dueDate, note, priority, isDone,
 });
-
-export default Task;
