@@ -103,7 +103,7 @@ const UI = (() => {
 
   const AddTaskToProject = () => {
     const nameTask = document.getElementById('name-task').value;
-    if (nameTask !== '' && chosenProject && chosenProject.tasks.filter((task) => task.title === nameTask).length === 0) {
+    if (nameTask !== '' && chosenProject && chosenProject.tasks.filter(task => task.title === nameTask).length === 0) {
       const newTask = Task({ title: nameTask });
       chosenProject.tasks.push(newTask);
       storage.update(chosenProject.title, chosenProject);
@@ -122,7 +122,7 @@ const UI = (() => {
       e.target.parentNode.classList.add('active');
       detailsTask.classList.remove('d-none');
     } else if (e.target.classList.contains('delete')) {
-      const chosenTask = chosenProject.tasks.filter((task) => task.title !== e.target.dataset.task);
+      const chosenTask = chosenProject.tasks.filter(task => task.title !== e.target.dataset.task);
       chosenProject.tasks = chosenTask;
       storage.update(chosenProject.title, chosenProject);
       renderTasks();
