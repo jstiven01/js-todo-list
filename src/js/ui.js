@@ -49,10 +49,15 @@ const UI = (() => {
       divCheck.setAttribute('class', 'form-check form-check-inline');
       checkIsDone.type = 'checkbox';
       checkIsDone.setAttribute('class', 'form-check-input');
+      checkIsDone.setAttribute('data-task', `${chosenProject.tasks[i].title}`);
       div.setAttribute('class', 'item my-1 d-flex');
       span.innerHTML = chosenProject.tasks[i].title;
-      span.setAttribute('class', 'name-task flex-grow-1');
-
+      if (chosenProject.tasks[i].isDone) {
+        span.setAttribute('class', 'name-task flex-grow-1 line-through');
+      } else {
+        span.setAttribute('class', 'name-task flex-grow-1')
+      }
+      
       divCheck.appendChild(checkIsDone);
       div.appendChild(divCheck);
       div.appendChild(span);
@@ -89,7 +94,8 @@ const UI = (() => {
 
   const AddTaskToProject = () => {
     const nameTask = document.getElementById('name-task').value;
-    if (nameTask !== '') {
+    let checkTaskTitle = chosenProject.tasks.filter((task) => task.title === nameTask);
+    if (nameTask !== '' && checkTaskTitle.length === 0) {
       const newTask = Task({ title: nameTask });
       chosenProject.tasks.push(newTask);
       storage.update(chosenProject.title, chosenProject);
@@ -112,6 +118,16 @@ const UI = (() => {
       chosenProject.tasks = updatedTasks;
       storage.update(chosenProject.title, chosenProject);
       renderTasks();
+    } else if (e.target.classList.contains('form-check-input')) {
+      const taskToCheck = e.target.dataset.task;
+      for (let i = 0; i < chosenProject.tasks.length; i += 1) {
+        if (chosenProject.tasks[i].title === taskToCheck) {
+          chosenProject.tasks[i].isDone = !chosenProject.tasks[i].isDone;
+          storage.update(chosenProject.title, chosenProject);
+          renderTasks();
+          return;
+        }
+      }
     }
   };
 
