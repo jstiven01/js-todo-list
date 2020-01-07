@@ -12,7 +12,7 @@ const UI = (() => {
   const detailsTask = document.getElementById('detail-task');
   const inputDueDate = document.getElementById('due-date');
   const selectPriority = document.getElementById('select-priority');
-  const inputNote = document.getElementById('note');
+  const inputDescription = document.getElementById('description');
   const btnEdit = document.getElementById('edit-task');
 
   let chosenProject;
@@ -103,7 +103,7 @@ const UI = (() => {
 
   const AddTaskToProject = () => {
     const nameTask = document.getElementById('name-task').value;
-    if (nameTask !== '' && chosenProject && chosenProject.tasks.filter(task => task.title === nameTask).length === 0) {
+    if (nameTask !== '' && chosenProject && chosenProject.tasks.filter((task) => task.title === nameTask).length === 0) {
       const newTask = Task({ title: nameTask });
       chosenProject.tasks.push(newTask);
       storage.update(chosenProject.title, chosenProject);
@@ -117,12 +117,12 @@ const UI = (() => {
       actualTask = Task(chosenProject.findTask(e.target.innerText));
       inputDueDate.value = actualTask.dueDate;
       selectPriority.value = actualTask.priority;
-      inputNote.value = actualTask.note;
+      inputDescription.value = actualTask.description;
       itemActive(projectTasks);
       e.target.parentNode.classList.add('active');
       detailsTask.classList.remove('d-none');
     } else if (e.target.classList.contains('delete')) {
-      const chosenTask = chosenProject.tasks.filter(task => task.title !== e.target.dataset.task);
+      const chosenTask = chosenProject.tasks.filter((task) => task.title !== e.target.dataset.task);
       chosenProject.tasks = chosenTask;
       storage.update(chosenProject.title, chosenProject);
       renderTasks();
@@ -142,7 +142,7 @@ const UI = (() => {
   const editTask = () => {
     actualTask.dueDate = inputDueDate.value;
     actualTask.priority = selectPriority.value;
-    actualTask.note = inputNote.value;
+    actualTask.description = inputDescription.value;
     for (let i = 0; i < chosenProject.tasks.length; i += 1) {
       if (chosenProject.tasks[i].title === actualTask.title) {
         chosenProject.tasks[i] = actualTask;

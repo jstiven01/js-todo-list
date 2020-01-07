@@ -1,7 +1,7 @@
 const Task = ({
-  title, dueDate = '', note = '', priority = 'normal', isDone = false,
+  title, dueDate = '', description = '', priority = 'normal', isDone = false,
 }) => ({
-  title, dueDate, note, priority, isDone,
+  title, dueDate, description, priority, isDone,
 });
 
 export default Task;
