@@ -103,13 +103,12 @@ const UI = (() => {
 
   const AddTaskToProject = () => {
     const nameTask = document.getElementById('name-task').value;
-    const checkTaskTitle = chosenProject.tasks.filter((task) => task.title === nameTask);
-    if (nameTask !== '' && checkTaskTitle.length === 0) {
+    if (nameTask !== '' && chosenProject && chosenProject.tasks.filter((task) => task.title === nameTask).length === 0) {
       const newTask = Task({ title: nameTask });
       chosenProject.tasks.push(newTask);
       storage.update(chosenProject.title, chosenProject);
+      renderTasks();
     }
-    renderTasks();
   };
 
   const selectedTask = (e) => {
@@ -123,7 +122,8 @@ const UI = (() => {
       e.target.parentNode.classList.add('active');
       detailsTask.classList.remove('d-none');
     } else if (e.target.classList.contains('delete')) {
-      chosenProject.tasks = chosenProject.removeTask(e.target.dataset.task);
+      const chosenTask = chosenProject.tasks.filter((task) => task.title !== e.target.dataset.task);
+      chosenProject.tasks = chosenTask;
       storage.update(chosenProject.title, chosenProject);
       renderTasks();
     } else if (e.target.classList.contains('form-check-input')) {
