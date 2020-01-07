@@ -16,6 +16,7 @@ const UI = (() => {
   const btnEdit = document.getElementById('edit-task');
 
   let chosenProject;
+  let actualTask;
 
   const renderProjects = () => {
     const projects = storage.allNamesProjects().sort();
@@ -50,7 +51,7 @@ const UI = (() => {
       checkIsDone.setAttribute('class', 'form-check-input');
       div.setAttribute('class', 'item my-1 d-flex');
       span.innerHTML = chosenProject.tasks[i].title;
-      span.setAttribute('class', 'name-task');
+      span.setAttribute('class', 'name-task flex-grow-1');
 
       divCheck.appendChild(checkIsDone);
       div.appendChild(divCheck);
@@ -100,7 +101,7 @@ const UI = (() => {
     if (e.target.classList.contains('name-task')) {
       currentTask.innerText = e.target.innerText;
       const chosenTask = chosenProject.tasks.filter((task) => task.title === e.target.innerText);
-      const actualTask = Task(chosenTask[0]);
+      actualTask = Task(chosenTask[0]);
       inputDueDate.value = actualTask.dueDate;
       selectPriority.value = actualTask.priority;
       inputNote.value = actualTask.note;
@@ -115,8 +116,19 @@ const UI = (() => {
   };
 
   const editTask = () => {
-    
-  }
+    actualTask.dueDate = inputDueDate.value;
+    actualTask.priority = selectPriority.value;
+    actualTask.note = inputNote.value;
+    for (let i = 0; i < chosenProject.tasks.length; i += 1) {
+      if (chosenProject.tasks[i].title === actualTask.title) {
+        chosenProject.tasks[i] = actualTask;
+        storage.update(chosenProject.title, chosenProject);
+        renderTasks();
+        alert('Task was edited successfully'); // eslint-disable-line no-alert
+        return;
+      }
+    }
+  };
 
   const loadListeners = () => {
     renderProjects();
