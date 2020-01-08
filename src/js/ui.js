@@ -13,7 +13,12 @@ const UI = (() => {
   const inputDueDate = document.getElementById('due-date');
   const selectPriority = document.getElementById('select-priority');
   const inputDescription = document.getElementById('description');
+  const inputNameTask = document.getElementById('name-task');
   const btnEdit = document.getElementById('edit-task');
+  const btnSave = document.getElementById('save-task');
+  const divProjectsName = document.getElementById('projects-names');
+  const divTasksName = document.getElementById('tasks-names');
+  const alertMessage = document.querySelector('.alert');
 
   let chosenProject;
   let actualTask;
@@ -96,19 +101,41 @@ const UI = (() => {
       renderTasks();
     } else if (e.target.classList.contains('remove')) {
       storage.remove(e.target.dataset.name);
+      projectTasks.innerHTML = '';
       renderProjects();
     }
   };
 
+  const cleanInputValues = () => {
+    inputDueDate.value = '';
+    selectPriority.value = '';
+    inputDescription.value = '';
+    inputNameTask.value = '';
+  };
+
 
   const AddTaskToProject = () => {
-    const nameTask = document.getElementById('name-task').value;
-    if (nameTask !== '' && chosenProject && chosenProject.tasks.filter(task => task.title === nameTask).length === 0) {
-      const newTask = Task({ title: nameTask });
-      chosenProject.tasks.push(newTask);
-      storage.update(chosenProject.title, chosenProject);
-      renderTasks();
-    }
+    cleanInputValues();
+    detailsTask.classList.remove('d-none');
+    divProjectsName.classList.add('opacity');
+    divTasksName.classList.add('opacity');
+    btnSave.classList.remove('d-none');
+    btnEdit.classList.add('d-none');
+  };
+
+  const saveTask = () => {
+    const newTask = Task({});
+    newTask.dueDate = inputDueDate.value;
+    newTask.priority = selectPriority.value;
+    newTask.description = inputDescription.value;
+    newTask.title = inputNameTask.value;
+    chosenProject.tasks.push(newTask);
+    storage.update(chosenProject.title, chosenProject);
+    renderTasks();
+    divProjectsName.classList.remove('opacity');
+    divTasksName.classList.remove('opacity');
+    detailsTask.classList.add('d-none');
+    cleanInputValues();
   };
 
   const selectedTask = (e) => {
@@ -118,6 +145,9 @@ const UI = (() => {
       inputDueDate.value = actualTask.dueDate;
       selectPriority.value = actualTask.priority;
       inputDescription.value = actualTask.description;
+      inputNameTask.value = actualTask.title;
+      btnSave.classList.add('d-none');
+      btnEdit.classList.remove('d-none');
       itemActive(projectTasks);
       e.target.parentNode.classList.add('active');
       detailsTask.classList.remove('d-none');
@@ -125,6 +155,8 @@ const UI = (() => {
       const chosenTask = chosenProject.tasks.filter(task => task.title !== e.target.dataset.task);
       chosenProject.tasks = chosenTask;
       storage.update(chosenProject.title, chosenProject);
+      currentTask.innerText = 'Current Task';
+      detailsTask.classList.add('d-none');
       renderTasks();
     } else if (e.target.classList.contains('form-check-input')) {
       const taskToCheck = e.target.dataset.task;
@@ -145,10 +177,15 @@ const UI = (() => {
     actualTask.description = inputDescription.value;
     for (let i = 0; i < chosenProject.tasks.length; i += 1) {
       if (chosenProject.tasks[i].title === actualTask.title) {
+        actualTask.title = inputNameTask.value;
         chosenProject.tasks[i] = actualTask;
         storage.update(chosenProject.title, chosenProject);
         renderTasks();
-        alert('Task was edited successfully'); // eslint-disable-line no-alert
+        alertMessage.classList.remove('d-none');
+        detailsTask.classList.add('d-none');
+        setTimeout(() => {
+          alertMessage.classList.add('d-none');
+        }, (3 * 1000));
         return;
       }
     }
@@ -161,6 +198,7 @@ const UI = (() => {
     btnAddTask.addEventListener('click', AddTaskToProject);
     projectTasks.addEventListener('click', selectedTask);
     btnEdit.addEventListener('click', editTask);
+    btnSave.addEventListener('click', saveTask);
   };
 
   return {
