@@ -22,6 +22,7 @@ const UI = (() => {
 
   let chosenProject;
   let actualTask;
+  const defaultProject = Project({ title: 'Default' });
 
   const renderProjects = () => {
     const projects = storage.allNamesProjects().sort();
@@ -31,7 +32,7 @@ const UI = (() => {
       const content = `
       <div class="item my-1 d-flex justify-content-between">
         <span>${project}</span>
-        <button class="remove btn-small btn-primary" data-name="${project}">Delete</button>
+        <button class="remove btn-small btn-primary ${project.toLowerCase()}-hidden " data-name="${project}">Delete</button>
       </div>
       `;
       projectsUser.insertAdjacentHTML('beforeend', content);
@@ -129,13 +130,16 @@ const UI = (() => {
     newTask.priority = selectPriority.value;
     newTask.description = inputDescription.value;
     newTask.title = inputNameTask.value;
-    chosenProject.tasks.push(newTask);
-    storage.update(chosenProject.title, chosenProject);
-    renderTasks();
-    divProjectsName.classList.remove('opacity');
-    divTasksName.classList.remove('opacity');
-    detailsTask.classList.add('d-none');
-    cleanInputValues();
+    if (newTask.dueDate !== '' && newTask.priority !== '' && newTask.description !== '' && newTask.title !== '') {
+      if (!chosenProject) chosenProject = defaultProject;
+      chosenProject.tasks.push(newTask);
+      storage.update(chosenProject.title, chosenProject);
+      renderTasks();
+      divProjectsName.classList.remove('opacity');
+      divTasksName.classList.remove('opacity');
+      detailsTask.classList.add('d-none');
+      cleanInputValues();
+    }
   };
 
   const selectedTask = (e) => {
@@ -175,23 +179,35 @@ const UI = (() => {
     actualTask.dueDate = inputDueDate.value;
     actualTask.priority = selectPriority.value;
     actualTask.description = inputDescription.value;
-    for (let i = 0; i < chosenProject.tasks.length; i += 1) {
-      if (chosenProject.tasks[i].title === actualTask.title) {
-        actualTask.title = inputNameTask.value;
-        chosenProject.tasks[i] = actualTask;
-        storage.update(chosenProject.title, chosenProject);
-        renderTasks();
-        alertMessage.classList.remove('d-none');
-        detailsTask.classList.add('d-none');
-        setTimeout(() => {
-          alertMessage.classList.add('d-none');
-        }, (3 * 1000));
-        return;
+    if (actualTask.dueDate !== '' && actualTask.priority !== '' && actualTask.description !== '' && inputNameTask.value !== '') {
+      for (let i = 0; i < chosenProject.tasks.length; i += 1) {
+        if (chosenProject.tasks[i].title === actualTask.title) {
+          actualTask.title = inputNameTask.value;
+          chosenProject.tasks[i] = actualTask;
+          storage.update(chosenProject.title, chosenProject);
+          renderTasks();
+          alertMessage.classList.remove('d-none');
+          detailsTask.classList.add('d-none');
+          setTimeout(() => {
+            alertMessage.classList.add('d-none');
+          }, (3 * 1000));
+          return;
+        }
       }
     }
   };
 
+  const createDefaultProject = () => {
+    if (storage.create(defaultProject.title, defaultProject)) {
+      chosenProject = defaultProject;
+    } else {
+      chosenProject = Project(storage.read(defaultProject.title));
+      renderTasks();
+    }
+  };
+
   const loadListeners = () => {
+    createDefaultProject();
     renderProjects();
     btnCreateProject.addEventListener('click', createProject);
     projectsUser.addEventListener('click', selectedProject);
